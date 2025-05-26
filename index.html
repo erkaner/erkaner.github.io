@@ -1,89 +1,173 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/11.8.1/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/11.8.1/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/11.8.1/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:ital,wght@1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,400&display=swap" rel="stylesheet">
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FEDU RESEARCH HUB</title>
+  <script type="module" crossorigin src="/assets/index-CuxK9ccA.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DOpCu93I.css">
+</head>
+<body>
+    <canvas id="network-canvas"></canvas>
+
+    <div id="root">
+
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+        // --- Configuration ---
+        const PARTICLE_COUNT = 50; // Number of points in the network
+        const MAX_CONNECT_DISTANCE = 300; // Max distance to draw a line between particles
+        // *** UPDATED: Reduced particle speed ***
+        const PARTICLE_SPEED = 0.1; // Max speed of particles (was 0.5)
+        const LINE_COLOR = 'rgba(255, 255, 255, OPACITY)'; // Base line color (opacity replaced dynamically)
+        const PARTICLE_RADIUS = 3; // Size of the particles (optional, set to 0 to hide)
+        // --- End Configuration ---
+
+
+        let particles = [];
+        let animationFrameId;
+
+        // Particle class or object structure
+        class Particle {
+            constructor(x, y, vx, vy) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx; // Velocity x
+                this.vy = vy; // Velocity y
+            }
+
+            // Update particle position and handle wall collisions
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.vx *= -1;
+                    // Keep particle within bounds after bounce
+                    this.x = Math.max(0, Math.min(canvas.width, this.x));
+                }
+                if (this.y < 0 || this.y > canvas.height) {
+                    this.vy *= -1;
+                    // Keep particle within bounds after bounce
+                    this.y = Math.max(0, Math.min(canvas.height, this.y));
+                }
+            }
+
+            // Draw the particle (optional)
+            draw() {
+                if (PARTICLE_RADIUS > 0) {
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // Semi-transparent white
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, PARTICLE_RADIUS, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
         }
-      });
+
+        // Initialize particles
+        function initParticles() {
+            particles = []; // Clear existing particles
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                // Random velocity between -PARTICLE_SPEED and +PARTICLE_SPEED
+                const vx = (Math.random() - 0.5) * 2 * PARTICLE_SPEED;
+                const vy = (Math.random() - 0.5) * 2 * PARTICLE_SPEED;
+                particles.push(new Particle(x, y, vx, vy));
+            }
+        }
+
+        // Draw lines between nearby particles
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) { // Start j from i+1 to avoid duplicates and self-connection
+                    const p1 = particles[i];
+                    const p2 = particles[j];
+
+                    // Calculate distance between p1 and p2
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    // If distance is within threshold, draw a line
+                    if (distance < MAX_CONNECT_DISTANCE) {
+                        // Calculate opacity based on distance (closer = more opaque)
+                        const opacity = 1 - (distance / MAX_CONNECT_DISTANCE);
+
+                        // Draw the line
+                        ctx.strokeStyle = LINE_COLOR.replace('OPACITY', opacity.toFixed(2));
+                        ctx.lineWidth = 1; // Line thickness
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw particles
+            particles.forEach(p => {
+                p.update();
+                p.draw(); // Optional: draw the particle itself
+            });
+
+            // Draw connections
+            drawConnections();
+
+            // Request next frame
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        // Resize handler
+        function resizeCanvas() {
+            // Stop previous animation loop if running
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+
+            // Set canvas dimensions to match window
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // Re-initialize particles for new dimensions
+            initParticles();
+
+            // Restart animation
+            animate();
+        }
+
+        // Initial setup on DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial size and start animation
+            resizeCanvas();
+            // Add resize listener
+            window.addEventListener('resize', resizeCanvas);
+        });
+
     </script>
-  </body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
 </html>
